@@ -3,6 +3,8 @@
 **Logarithmically Unified Normative Acuity Set**  
 A psychometrically equalized Sloan optotype alphabet for digital visual acuity assessment.
 
+![L.U.N.A. Optotypes — true relative sizes](luna_v2_preview.png)
+
 ---
 
 ## What is this?
