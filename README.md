@@ -3,7 +3,6 @@
 **Logarithmically Unified Normative Acuity Set**  
 A psychometrically equalized Sloan optotype alphabet for digital visual acuity assessment.
 
-LUNA correction factors pre-encoded in the font file.
 ---
 
 ## What is this?
@@ -29,7 +28,7 @@ The font file `luna_optotypes.otf` has the correction factors **baked directly i
 | P | ×1.170 | 97.5% of cell |
 | R | ×1.200 | 100% of cell (reference) |
 
-**U** is the psychometric anchor (lowest correction factor). **R** is the font-size reference (largest glyph, fills the full em-square). All letters share the same 1000-unit advance width and fit within the 1000×1000 UPM bounding box — no clipping, no overflow.
+**R** is the font-size reference (largest correction factor, fills the full em-square). All other letters are proportionally smaller, centered in the same 1000-unit cell. All advance widths = 1000 — no clipping, no overflow.
 
 ---
 
@@ -47,32 +46,31 @@ The source Sloan vector typeface used to derive these glyphs is maintained separ
 
 ### 1. Install the font
 
-**macOS:** Double-click `luna_optotypes.otf` → Install Font.  
-**Windows:** Right-click `luna_optotypes.otf` → Install.  
+**macOS:** Double-click `luna_optotypes.otf` → Install Font. Search for **LUNA Optotypes** in the font picker.  
+**Windows:** Right-click `luna_optotypes.otf` → Install. Search for **LUNA Optotypes**.  
 **Linux:** Copy to `~/.fonts/` and run `fc-cache -f`.
 
 ### 2. Use in any application
 
-Set the font family to **L.U.N.A. Optotypes** and type any of the 10 letters.  
-At equal point size, the relative physical dimensions are automatically correct.
+Set the font family to **LUNA Optotypes** and type any of the 10 letters. At equal point size, the relative physical sizes are automatically correct.
 
 ```css
 /* Web / CSS */
 @font-face {
-  font-family: 'LUNAOptotypes';
+  font-family: 'LUNA Optotypes';
   src: url('luna_optotypes.otf') format('opentype');
 }
 
 .optotype {
-  font-family: 'LUNAOptotypes';
-  font-size: 48px;   /* all 10 letters will render at correct relative sizes */
+  font-family: 'LUNA Optotypes';
+  font-size: 48px;
   color: black;
   background: white;
 }
 ```
 
 ```html
-<!-- Example: single-letter display -->
+<!-- Single-letter display -->
 <span class="optotype">R</span>
 ```
 
@@ -80,16 +78,16 @@ At equal point size, the relative physical dimensions are automatically correct.
 
 ```javascript
 // Load font
-const lunaFont = new FontFace('LUNAOptotypes', 'url(luna_optotypes.otf)');
+const lunaFont = new FontFace('LUNA Optotypes', 'url(luna_optotypes.otf)');
 await lunaFont.load();
 document.fonts.add(lunaFont);
 
-// LUNA letter set in order (U = psychometric anchor)
+// LUNA letter set (U = psychometric anchor, R = font-size reference)
 const LUNA_SET = ['U', 'V', 'Z', 'A', 'X', 'N', 'O', 'E', 'P', 'R'];
 
-// Display a letter at 0.0 logMAR on a canvas
+// Display a letter at target height in pixels
 function drawOptotype(ctx, letter, xPx, yPx, heightPx) {
-  ctx.font = `${heightPx}px LUNAOptotypes`;
+  ctx.font = `${heightPx}px "LUNA Optotypes"`;
   ctx.fillStyle = 'black';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
@@ -97,12 +95,12 @@ function drawOptotype(ctx, letter, xPx, yPx, heightPx) {
 }
 ```
 
-> **Important:** all 10 letters must be displayed at the **same `font-size`**. The font encodes the relative sizes — do not apply per-letter size corrections in your software.
+> **Important:** display all 10 letters at the **same `font-size`**. The font encodes the relative sizes — do not apply per-letter size corrections in your software.
 
 ### 4. Use in Word / LibreOffice
 
 1. Install the font.
-2. Select font **L.U.N.A. Optotypes**.
+2. Select font **LUNA Optotypes**.
 3. Type any combination of `U V Z A X N O E P R` at the same font size.
 4. The letters will appear at their correct psychometric proportions automatically.
 
@@ -110,7 +108,7 @@ function drawOptotype(ctx, letter, xPx, yPx, heightPx) {
 
 ## Clinical validation
 
-The L.U.N.A. Set was validated against Classic Sloan (n = 110) on a 32-inch 1080p monitor at 3.8 m:
+Validated against Classic Sloan (n = 110) on a 32-inch 1080p monitor at 3.8 m:
 
 | Metric | Classic Sloan | L.U.N.A. Set |
 |--------|--------------|--------------|
@@ -121,25 +119,38 @@ The L.U.N.A. Set was validated against Classic Sloan (n = 110) on a 32-inch 1080
 
 ---
 
-## Methodology
-
-Letter selection and calibration involved three phases:
+## Methodology summary
 
 - **Phase I (n = 41):** QUEST+ Bayesian adaptive estimation characterized the detection threshold (Th75) and psychometric slope of all 26 Latin letters. A 5-parameter Monte Carlo optimization (50,000 simulations) selected the optimal 10-letter subset.
 - **Phase II:** Structural Similarity Index (SSIM) analysis at ~68 ppi confirmed letter exclusions and calibrated individual size-correction factors.
 - **Phase III (n = 110):** Independent clinical validation against Classic Sloan.
 
-Full methodology and results are described in the associated publication (see Citation below).
-
 ---
 
 ## Citation
 
-If you use this font in research or clinical tools, please cite:
+If you use this font or dataset in your work, please cite this repository:
 
-> Costa JCL, Nascimento RBM, Martins EMA, Ricarte AJ, Mangueira PKCA, Bezerra HL.  
-> **The L.U.N.A. Set: A Psychometrically Equalized Optotype Alphabet for Visual Acuity Assessment — Derivation and Clinical Validation.**  
-> *European Journal of Ophthalmology*, 2026. *(in press)*
+```
+Costa, J. C. L. (2026). L.U.N.A. Optotypes: Psychometrically equalized
+Sloan optotypes for digital visual acuity assessment [Font and dataset].
+GitHub. https://github.com/eyecharts/LUNAproject
+```
+
+BibTeX:
+
+```bibtex
+@software{costa2026luna,
+  author    = {Costa, Juan C. L.},
+  title     = {{L.U.N.A.} Optotypes: Psychometrically equalized {Sloan}
+               optotypes for digital visual acuity assessment},
+  year      = {2026},
+  publisher = {GitHub},
+  url       = {https://github.com/eyecharts/LUNAproject}
+}
+```
+
+> A peer-reviewed manuscript describing the full derivation and clinical validation is currently under review. This citation will be updated upon publication.
 
 ---
 
@@ -154,4 +165,4 @@ Commercial redistribution requires attribution.
 ## Related
 
 - **OptoLab / EyeLab platform:** [github.com/eyecharts/EyeLab](https://github.com/eyecharts/EyeLab) — QUEST+ implementation and Sloan.otf source
-- **Prior publication:** Costa JC, Amorim DM, Lins PR. Clinical validation of a cross-platform digital visual acuity measurement system. *Eur J Ophthalmol* 2025;35:2004–12. https://doi.org/10.1177/11206721251336001
+- **Prior work:** Costa JC, Amorim DM, Lins PR. Clinical validation of a cross-platform digital visual acuity measurement system. *Eur J Ophthalmol* 2025;35:2004–12. https://doi.org/10.1177/11206721251336001
